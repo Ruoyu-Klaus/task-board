@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-function EditTaskModal() {
+import { connect } from 'react-redux';
+import { updateTask, clearCurrent } from '../../actions/taskAction';
+
+function EditTaskModal({ current, updateTask, clearCurrent }) {
   const [message, setMessage] = useState('');
   const [attention, setAttention] = useState(false);
   const [cohort, setCohort] = useState('');
+
+  useEffect(() => {
+    if (current) {
+      setMessage(current.message);
+      setCohort(current.cohort);
+      setAttention(current.attention);
+    }
+  }, [current]);
 
   const onSubmit = () => {
     if (message === '' || cohort === '') {
       M.toast({ html: 'Please enter a message and cohort' });
     } else {
-      console.log(message, attention, cohort);
+      const newTask = {
+        id: current.id,
+        message,
+        attention,
+        cohort,
+        date: new Date(),
+      };
+      updateTask(newTask);
+
+      M.toast({ html: `Task updated by ${cohort}` });
 
       // clear fileds
       setMessage('');
@@ -33,9 +54,6 @@ function EditTaskModal() {
               autoComplete='off'
               onChange={e => setMessage(e.target.value)}
             />
-            <label htmlFor='message' className='active'>
-              Task Name
-            </label>
           </div>
         </div>
 
@@ -90,4 +108,17 @@ const modelStyle = {
   width: '70%',
   height: '70%',
 };
-export default EditTaskModal;
+
+EditTaskModal.prototype = {
+  current: PropTypes.object.isRequired,
+  updateTask: PropTypes.object.isRequired,
+  clearCurrent: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  current: state.task.current,
+});
+
+export default connect(mapStateToProps, { updateTask, clearCurrent })(
+  EditTaskModal
+);

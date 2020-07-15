@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-function AddTaskModal() {
+import { connect } from 'react-redux';
+import { addTask } from '../../actions/taskAction';
+
+function AddTaskModal({ addTask }) {
   const [message, setMessage] = useState('');
   const [attention, setAttention] = useState(false);
   const [cohort, setCohort] = useState('');
@@ -10,7 +14,14 @@ function AddTaskModal() {
     if (message === '' || cohort === '') {
       M.toast({ html: 'Please enter a message and cohort' });
     } else {
-      console.log(message, attention, cohort);
+      const newTask = {
+        message,
+        attention,
+        cohort,
+        date: new Date(),
+      };
+      addTask(newTask);
+      M.toast({ html: `Task add by ${cohort}` });
       // clear fileds
       setMessage('');
       setAttention(false);
@@ -89,4 +100,9 @@ const modelStyle = {
   width: '70%',
   height: '70%',
 };
-export default AddTaskModal;
+
+AddTaskModal.propTypes = {
+  addTask: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addTask })(AddTaskModal);
