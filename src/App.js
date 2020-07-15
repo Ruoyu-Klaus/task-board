@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
 import SearchBar from './components/layout/SearchBar';
-// import Logs from './components/logs/Logs';
-// import AddBtn from './components/layout/AddBtn';
-// import AddLogModal from './components/logs/AddLogModal';
-// import EditLogModal from './components/logs/EditLogModal';
-// import AddTechModal from './components/techs/AddTechModal';
-// import TechListModal from './components/techs/TechListModal';
+import Tasks from './components/tasks/Tasks';
+import AddBtn from './components/layout/AddBtn';
+import AddTaskModal from './components/tasks/AddTaskModal';
+import EditTaskModal from './components/tasks/EditTaskModal';
+import AddCohortModal from './components/cohorts/AddCohortModal';
+import CohortListModal from './components/cohorts/CohortListModal';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -19,6 +19,14 @@ function App() {
   return (
     <Fragment>
       <SearchBar />
+      <div className='container'>
+        <AddBtn />
+        <AddTaskModal />
+        <EditTaskModal />
+        <AddCohortModal />
+        <CohortListModal />
+        <Tasks />
+      </div>
     </Fragment>
   );
 }

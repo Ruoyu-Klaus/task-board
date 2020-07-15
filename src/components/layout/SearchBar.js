@@ -2,12 +2,12 @@ import React from 'react';
 
 function SearchBar() {
   return (
-    <nav style={{ marginBottm: '30px' }} className='teal lighten-2'>
+    <nav style={{ marginBottm: '30px' }} className='teal lighten-2 z-depth-2'>
       <div className='nav-wrapper'>
         <form>
           <div className='input-field'>
             <input id='search' type='search' required />
-            <label className='label-icon' for='search'>
+            <label className='label-icon' htmlFor='search'>
               <i className='material-icons'>search</i>
             </label>
             <i className='material-icons'>close</i>
