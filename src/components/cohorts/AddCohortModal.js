@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-function AddCohortModal() {
+import { connect } from 'react-redux';
+import { addCohorts } from '../../actions/cohortAction';
+
+function AddCohortModal({ addCohorts }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
@@ -9,8 +13,12 @@ function AddCohortModal() {
     if (firstName === '' || lastName === '') {
       M.toast({ html: 'Please enter a firstname and lastname' });
     } else {
-      console.log(firstName, lastName);
-
+      const newCohort = {
+        firstName,
+        lastName,
+      };
+      addCohorts(newCohort);
+      M.toast({ html: `${firstName} ${lastName} has been added` });
       // clear fileds
       setFirstName('');
       setLastName('');
@@ -68,4 +76,9 @@ const modelStyle = {
   width: '70%',
   height: '70%',
 };
-export default AddCohortModal;
+
+AddCohortModal.prototype = {
+  addCohorts: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addCohorts })(AddCohortModal);

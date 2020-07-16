@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import M from 'materialize-css/dist/js/materialize.min.js';
+import CohortsSelectOption from '../cohorts/CohortsSelectOption';
 
 import { connect } from 'react-redux';
 import { addTask } from '../../actions/taskAction';
@@ -60,9 +61,7 @@ function AddTaskModal({ addTask }) {
               <option value='' disabled>
                 Select Cohort
               </option>
-              <option value='wangruoyu'>wangruoyu</option>
-              <option value='zhuzhou'>zhuzhou</option>
-              <option value='zhewudu'>zhewudu</option>
+              <CohortsSelectOption />
             </select>
           </div>
         </div>
